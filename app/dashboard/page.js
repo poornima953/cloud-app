@@ -35,11 +35,11 @@ export default function Dashboard() {
     return <p style={{ textAlign: "center" }}>Loading...</p>;
   }
 
-  if (!user) {
-    // ✅ Only redirect AFTER loading is complete
-    window.location.href = "/login";
-    return null;
-  }
+//   if (!user) {
+//     // ✅ Only redirect AFTER loading is complete
+//     window.location.href = "/login";
+//     return null;
+//   }
 
   return (
     <div style={{ padding: "40px" }}>
