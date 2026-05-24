@@ -2,7 +2,8 @@
 
 export default function LoginPage() {
   const login = () => {
-    window.location.href = "/.auth/login/aad?post_login_redirect_uri=/dashboard";
+    const redirectUri = `${window.location.origin}/dashboard`;
+    window.location.href = `/.auth/login/aad?post_login_redirect_uri=${encodeURIComponent(redirectUri)}`;
   };
 
   return (
