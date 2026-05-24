@@ -10,7 +10,9 @@ export default function Dashboard() {
     const fetchUser = async () => {
       try {
         const response = await fetch("/.auth/me");
+        console.log("/.auth/me status", response.status);
         const data = await response.json();
+        console.log("/.auth/me data", data);
 
         if (data && data.length > 0) {
           setUser(data[0]);
@@ -18,6 +20,7 @@ export default function Dashboard() {
           setUser(null);
         }
       } catch (error) {
+        console.error("Error fetching /.auth/me", error);
         setUser(null);
       } finally {
         setLoading(false);
@@ -35,11 +38,11 @@ export default function Dashboard() {
     return <p style={{ textAlign: "center" }}>Loading...</p>;
   }
 
-//   if (!user) {
-//     // ✅ Only redirect AFTER loading is complete
-//     window.location.href = "/login";
-//     return null;
-//   }
+  if (!user) {
+    // ✅ Only redirect AFTER loading is complete
+    window.location.href = "/login";
+    return null;
+  }
 
   return (
     <div style={{ padding: "40px" }}>
