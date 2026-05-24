@@ -1,17 +1,18 @@
 'use client';
 
 export default function LoginPage() {
-  const login = () => {
-    const redirectUri = `${window.location.origin}`;
-    window.location.href = `/.auth/login/aad?post_login_redirect_uri=${encodeURIComponent(redirectUri)}`;
+
+  const handleLogin = () => {
+    window.location.href =
+      "/.auth/login/aad?post_login_redirect_uri=/dashboard";
   };
 
   return (
     <div style={styles.container}>
-      <h1>Welcome to Cloud App</h1>
+      <h1>Cloud App</h1>
       <p>Please sign in to continue</p>
 
-      <button style={styles.button} onClick={login}>
+      <button onClick={handleLogin} style={styles.button}>
         Sign in with Microsoft
       </button>
     </div>
@@ -27,12 +28,13 @@ const styles = {
     alignItems: "center",
   },
   button: {
+    marginTop: "20px",
     padding: "12px 20px",
     fontSize: "16px",
     background: "#0078d4",
     color: "#fff",
     border: "none",
     borderRadius: "6px",
-    cursor: "pointer",
+    cursor: "pointer"
   }
 };

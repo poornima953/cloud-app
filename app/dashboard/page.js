@@ -1,25 +1,42 @@
 'use client';
+
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/.auth/me")
-      .then(res => res.json())
-      .then(data => {
-        if (data.length > 0) {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch("/.auth/me");
+        const data = await response.json();
+
+        if (data && data.length > 0) {
           setUser(data[0]);
+        } else {
+          setUser(null);
         }
+      } catch (error) {
+        setUser(null);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchUser();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  const handleLogout = () => {
+    window.location.href = "/.auth/logout";
+  };
+
+  if (loading) {
+    return <p style={{ textAlign: "center" }}>Loading...</p>;
+  }
 
   if (!user) {
-    // ✅ Only redirect AFTER checking auth
+    // ✅ Only redirect AFTER loading is complete
     window.location.href = "/login";
     return null;
   }
@@ -27,9 +44,14 @@ export default function Dashboard() {
   return (
     <div style={{ padding: "40px" }}>
       <h1>Dashboard</h1>
-      <p>Welcome: {user.userDetails}</p>
 
-      <button onClick={() => window.location.href = "/.auth/logout"}>
+      <p><b>User:</b> {user.userDetails}</p>
+      <p><b>Provider:</b> {user.identityProvider}</p>
+
+      <button
+        onClick={handleLogout}
+        style={{ marginTop: "20px", padding: "10px 15px", cursor: "pointer" }}
+      >
         Logout
       </button>
     </div>
